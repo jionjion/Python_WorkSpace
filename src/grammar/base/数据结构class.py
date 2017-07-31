@@ -5,7 +5,7 @@ class Person(object):                             #类名,继承object类
         self.name = name
         self.gender = gender
         self.__job = 'student'                    #双下划线修饰,为私有属性,外部无法访问    
-#创建类的属�??
+#创建类的属型
     describe = "这是类的属性,所有实例都可以修改";          #注意缩进
 #创建类的方法
     @classmethod                                 #使用注解,标注为这是类方法,可以通过类型.方法名进行调用

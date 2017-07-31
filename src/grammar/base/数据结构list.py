@@ -33,15 +33,14 @@ users = userList[:];
 # 从开始到结束,每两个取一个
 users = userList[::2];
 
-
 print("切片:",users);
 
-
-users = userList[-2:];
 # 倒叙切片
-
+users = userList[-2:];
 
 print("前三个:",userList);
+
+
 
 #创建元组,不可变的数组列表类型
 userList = ('Jion','Aries');
