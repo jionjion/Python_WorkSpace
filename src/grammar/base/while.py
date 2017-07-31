@@ -17,7 +17,7 @@ while True:                             #表示无条件执行
     x = x + 1;
     if x > 10:                          #逻辑判断
         break;                          #如果大于10,则跳出循环
-    if x%2==0:                          #求余为0,为偶数,跳过
+    if x%2==0:                          #求余数0,为偶数,跳过
         continue;                       #跳过
     tol = tol + x;
 print(tol);    
