@@ -1,3 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/grammar/base/\u6570\u636E\u7ED3\u6784string.py=utf-8
 encoding//src/grammar/file/file.txt=UTF-8
+encoding//src/grammar/object/Admin.py=utf-8
+encoding//src/grammar/object/Lifestyle.py=utf-8
+encoding//src/grammar/object/User.py=utf-8
+encoding//src/grammar/regular/RE\u6A21\u5757.py=utf-8
+encoding//src/grammar/regular/\u5339\u914D\u6587\u672C\u5F00\u5934\u548C\u7ED3\u675F.py=utf-8
