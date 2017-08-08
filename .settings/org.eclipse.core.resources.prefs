@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
+encoding//src/data_collect/request_mode/\u4F7F\u7528request\u5E93\u8BBF\u95EEgithub.py=utf-8
+encoding//src/data_collect/request_mode/\u4F7F\u7528request\u8BBF\u95EE.py=utf-8
+encoding//src/data_collect/request_mode/\u4F7F\u7528urllib\u8BBF\u95EE.py=utf-8
 encoding//src/grammar/base/\u6570\u636E\u7ED3\u6784string.py=utf-8
 encoding//src/grammar/file/file.txt=UTF-8
 encoding//src/grammar/object/Admin.py=utf-8
