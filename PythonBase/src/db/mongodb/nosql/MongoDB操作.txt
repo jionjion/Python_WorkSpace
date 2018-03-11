@@ -1,0 +1,21 @@
+文档数据库的使用
+
+连接,命令行窗口下执行
+    mongo
+
+切换数据库,没有则创建
+    use python
+
+查看当前数据库
+    db
+
+新增数据库文档,对象
+    db.user.insert({name:'Jion',age:24});
+
+db.news.insert([{title:'震惊,某男子深夜竟然做这种事',content:'今天晚上时间多,多学习,敲代码',type:'新闻',author:'Jion',create_date:'2018-03-10 13:05:46'},
+                    {title:'深夜好文',content:'我们都知道自己是怎么一步一步落后于别人的',type:'读书',author:'Jion',create_date:'2018-03-08 19:33:50'},
+                    {title:'小编独家新闻',content:'上海某男子深夜学习过于兴奋,影响室友休息',type:'新闻',author:'Jion',create_date:'2018-03-08 19:35:04'},
+                    {title:'就问你怕不怕',content:'昨夜,上海地区温度跌破冰点,上海人表示受不了',type:'新闻',author:'Jion',create_date:'2018-03-10 10:49:15'},
+                    {title:'五分钟即可',content:'每天抽出五分钟时间,读书看报聊人生',type:'读书',author:'Jion',create_date:'2018-03-10 13:05:46'},
+                    {title:'尴尬时刻,男默女泪',content:'降温了,但是却没有衣服穿',type:'新闻',author:'Jion',create_date:'2018-03-10 13:05:46'},
+                    ]);

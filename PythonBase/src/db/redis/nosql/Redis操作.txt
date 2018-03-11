@@ -1,0 +1,113 @@
+redis操作
+    命令行进入 redis-cli
+
+字符存储
+    [set] 存放,修改
+        set 键 值
+    例:
+        set name 'Jion'
+    [get] 获取
+        get 键
+    例:
+        get name
+    [mset] 存放,修改多个键值对
+        mset 键1 值1 键2 值2
+    例:
+        mset name1 'Jion' name2 'Arise'
+    [mget] 获得多个键值对
+        mget name1 name2
+    [append] 添加字符串,拼接到后面
+        set 键 追加字符串
+    [del] 删除
+        del name
+    [incr]/[decr] 增加/减少 1
+        incr/decr 数
+
+列表
+    [lpush]/[rpush] 从左/右压入列表
+        lpush/rpush  列表名  元素1  元素2
+    例:
+        lpush names 'Jion' 'Arise'
+    [lrange] 获取指定长度的列表,并返回
+        lrange 列表名  开始位置  结束位置
+    例:获取第一个
+        lrange 0 0
+    例:获取第一个到最后一个
+        lrange 0 -1
+    [ltrim] 从左往右,截取指定长度的列表
+        ltrim 列表名 开始位置  结束位置
+    例:截取左边四个元素
+        ltrim names 0 3
+    [lpop]/[rpop] 弹出最左/右边的元素,删除并返回
+        lpop/rpop 列表
+    [lpushx]/[rpushx] 当列表存在,则在最左/右添加,否则不添加
+        lpushx/rpushx 列表名  元素
+    例:
+        rpushx names 'Jion','Jion'
+
+集合[set]
+    [sadd]/[srem] 添加/删除元素
+        sadd/srem  集合名  元素1 元素2
+    例:
+        sadd names1 'Jion' 'Arse'
+        sadd names2 'Biob' 'Arse'
+    [sismember] 判断是否存在于集合中.存在返回1,否则返回0
+        sismember 集合名  元素
+    例:
+        sismember names1 'Jion'
+    [smembers] 返回该集合的所有成员
+        smembers 集合名
+    例:
+        smembers names1
+    [sdiff] 返回一个集合与其他集合的差,   前者-后者
+        sdiff 集合1  集合2
+    例:
+        sdiff names1 names2
+    [sinter] 返回多个集合的交集
+        sinter 集合1  集合2
+    例:
+        sinter names1 names2
+    [sunion] 返回多个集合的并集,重复删除
+        sunion 集合1  集合2
+    例:
+        sunion names1 names2
+
+散列[Hash] 具有唯一区分的元素集合,可以看做一个二维表结构
+    [hset]/[hget]  设置/获取散列值,重复则覆盖
+        hset 散列名:区分主键 域 值
+        hget 散列名:区分id 域
+    例:存放一个值
+        hset users:1 name 'Jion'
+        hset users:1 age 24
+    例:获取一个值
+        hget users:1 name
+    [hmset]/[hmget]  设置/获取多个散列值
+        hmset 散列名:区分主键 域1 值2 域1 值2
+        hmget 散列名:区分id 域1 域2
+    例:存放多个值
+        hmset users:2 name 'Arise' age 2
+    例:获得多个值
+        hmget users:2 name age
+    [hsetnx] 如果散列已经存在,则不进行覆盖,也不添加
+        hsetnx 散列名:区分主键 域 值
+    例:
+        hsetnx users:1 name 'jion'
+    [hkeys]/[hvals]  返回所有的键/值
+        hkeys/hvals 散列名:区分主键
+    例:查询该散列所有域
+        hkeys users:1
+    例:查询该散列所有值
+        hvals users:1
+    [hlen] 返回散列包含的域的数量
+        hlen 散列名:区分主键
+    例:查看当前散列的域数量
+        hlen users:1
+    [hdel] 删除散列指定的域,成功删除返回1,否则返回0
+        hdel 散列名:区分主键  域
+    例:
+        hdel users:1 age
+    [hexists] 判断指定域是否存在,存在返回1,否则返回0
+        hexists 散列名:区分主键 域
+    例:
+        hexists users:1 age
+
