@@ -1,0 +1,47 @@
+
+使用django工具构建项目  DjangoFrame,项目名
+    django-admin startproject DjangoFrame
+
+在当前目录下运行:
+    python manage.py runserver
+启动在
+    http://127.0.0.1:8000/
+
+python manage.py    命令大全
+    runserver 端口:地址                                 在指定地址和端口中启动服务器
+    shell                                               进入到交互式命令行
+    migrate                                             更新数据库表
+    startapp  应用名                                    创建新应用
+
+
+
+目录层次
+    |-- db.sqltite3                                     默认使用的数据库引擎生成的文件数据库
+    |-- manage.py                                       执行各种manage的子命令
+    |-- DjangoFrame                                     项目配置信息
+    |     |-- __pycache__
+    |     |-- settings.py                               网站的配置文件
+    |     |-- urls.py                                   URL的配置选项
+    |     |-- wsgi.py                                   外部服务器配置
+    |-- blog                                            模块信息
+    |     |-- migrations                                数据库相关,记录每次数据库更改日志
+    |     |-- admin.py                                  管理员相关
+    |     |-- apps.py
+    |     |-- models.py                                 数据库表相关
+    |     |-- tests.py                                  测试相关
+    |     |-- views.py                                  控制用户返回页面,配合站点目录下的urls.py,完成指定的跳转响应
+
+
+应用:
+    将网站不同模块打包为一个应用,实现对不同模块的复用效果
+
+创建应用
+    python manage.py startapp blog  创建一个新应用
+添加应用
+    修改./settings.py  INSTALLED_APPS 列表,将自己的应用添加进入
+
+访问模型
+    URL配置           建立URL与响应函数之间的关系
+    视图Views         响应客户
+    模型Models        描述数据库存放表结构
+    模板Templates     结合数据模型共同渲染出html
