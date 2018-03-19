@@ -35,7 +35,7 @@ result = re.findall('a[^bc]c',s)
 
 s = 'python , java , php'
 
-贪婪:尽量匹配数量最大的值
+贪婪:尽量匹配数量最大的值,匹配结果尽可能往后,尽可能长
 非贪婪:返回首个符合要求的字符
 
 查找字符重复出现3次到6次,贪婪匹配,便于查找最大的长度的符合要求的字符
@@ -122,5 +122,10 @@ result.groups(0)    完整的分组结果
 获得字符的匹配位置
 result.span()
 
+
+获取字符串中的中文
+s = 'hello 上海'
+result = re.match('.*?([\u4E00-\u9FA5]+)',s)
+result.group(1)
 
 
