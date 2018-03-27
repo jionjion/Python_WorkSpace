@@ -7,7 +7,9 @@ import scrapy
 class JobboleSpider(scrapy.Spider):
     name = 'jobbole'                            # 爬行项目的名字,用以调用项目
     allowed_domains = ['blog.jobbole.com']      # 开始网址
-    start_urls = ['http://blog.jobbole.com/']   # 遍历的文件
+    start_urls = ['http://blog.jobbole.com/110287/']   # 遍历的文件
 
     def parse(self, response):
-        pass
+        result_selector = response.xpath('//*[@id="post-110287"]/div[1]/h1')
+        print(result_selector)
+
