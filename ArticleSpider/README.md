@@ -24,7 +24,8 @@ scrapy.cfg              整体配置文件
 
 安装win32
     pip install pypiwin32
-
+安装PL
+    pip install pillow
 
 
 使用shell脚本启动,访问某个页面,将响应加载入内存,进而通过本地命令行直接进行查询
@@ -64,8 +65,19 @@ scrapy.cfg              整体配置文件
 - 获得收藏
     mark_num = response.xpath('//span[contains(@class,"bookmark-btn")]/text()')[0].extract()
     # 获得内容中的数字部分
-    mark_num = int ( re.match(r'.*(\d+).*',mark_num).group(1) )
+    mark_num = int ( re.match(r'.*?(\d+).*',mark_num).group(1) )
 
 ## CSS选择器
 
 - 选择标题
+    # .entry-header类下的h1标签内容, ::text伪类选择器,获得文字内容,返回为一个数组.
+    title = response.css('.entry-header h1 ::text').extract()
+
+- 选择创建时间
+    create_date = response.css('.entry-meta-hide-on-mobile ::text').extract()[0].replace('·','').strip()
+
+- 选择点赞
+    thumb_num = response.css('.vote-post-up h10 ::text').extract()[0]
+
+- 选择收藏
+    mark_num = int( re.match(r'.*?(\d+).*',response.css('.bookmark-btn ::text').extract()[0]).group(1) )

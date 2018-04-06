@@ -9,6 +9,8 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+
 BOT_NAME = 'ArticleSpider'
 
 SPIDER_MODULES = ['ArticleSpider.spiders']
@@ -64,9 +66,31 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
-#}
+# 设置ORM映射模型的位置, 处理类 和 进入顺序,越小优先级越高,先处理图片,再处理保存
+ITEM_PIPELINES = {
+   # 框架生成的
+   'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
+   # 自定义的图片下载
+   'ArticleSpider.pipelines.ArticleImagesPipeline': 200,
+   # 自定义的JSON写入
+   # 'ArticleSpider.pipelines.JsonWithEncodingPipeline': 200,
+   # 自定义的JSON导出
+   'ArticleSpider.pipelines.JsonExporterPipleline': 200,
+   # 自定义的MySQL存入
+   # 'ArticleSpider.pipelines.MysqlPipeline': 200,
+   # 使用异步连接池存入MySQL
+   'ArticleSpider.pipelines.MysqlTwistedPipline': 200,
+
+   # 'scrapy.pipelines.images.ImagesPipeline': 200,
+}
+
+# 图片下载配置 , 配置下载图片的文件路径和保存路径
+IMAGES_URLS_FIELD = 'front_image_url'
+project_dir = os.path.abspath(os.path.dirname(__file__))
+IMAGES_STORE = os.path.join(project_dir,'images')
+# 设定最大图片尺寸
+# IMAGES_MIN_HEIGHT = 100
+# IMAGES_MIN_WIDTH = 100
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,3 +112,10 @@ ROBOTSTXT_OBEY = False
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# 自定义,MySQL配置
+MYSQL_HOST = '127.0.0.1'
+MYSQL_DBNAME = 'scrapy'
+MYSQL_PORT = 3306
+MYSQL_USERNAME = 'root'
+MYSQL_PASSWORD = '123456'
