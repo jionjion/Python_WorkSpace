@@ -85,3 +85,43 @@ class ArticlespiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+
+
+'''
+    拉勾网爬取用到的类
+'''
+class LagouJob(scrapy.Item):
+    # 拉勾网职位信息
+    # 职位URL
+    url = scrapy.Field()
+    # 职位页面ID
+    url_object_id = scrapy.Field()
+    # 标题
+    titile = scrapy.Field()
+    # 薪资
+    salary = scrapy.Field()
+    # 工作地点
+    job_city = scrapy.Field()
+    # 工作年限
+    work_year = scrapy.Field()
+    # 学历要求
+    degree_need = scrapy.Field()
+    # 工作类型
+    job_type = scrapy.Field()
+    # 发布时间
+    pulish_time = scrapy.Field()
+    # 标签
+    tag = scrapy.Field()
+    # 职位诱惑
+    job_advantage = scrapy.Field()
+    # 职位描述
+    job_desc = scrapy.Field()
+    # 公司URL
+    company_url = scrapy.Field()
+    # 公司名
+    company_name = scrapy.Field()
+    # 创建时间
+    crawl_time = scrapy.Field()
+    # 最后更新时间
+    crawl_update_tiem = scrapy.Field()

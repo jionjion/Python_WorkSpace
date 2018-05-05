@@ -81,3 +81,8 @@ scrapy.cfg              整体配置文件
 
 - 选择收藏
     mark_num = int( re.match(r'.*?(\d+).*',response.css('.bookmark-btn ::text').extract()[0]).group(1) )
+
+# 实战
+## 爬取拉钩
+创建项目
+    scrapy genspider -t crawl lagou www.lagou.com

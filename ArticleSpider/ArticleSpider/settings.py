@@ -119,3 +119,8 @@ MYSQL_DBNAME = 'scrapy'
 MYSQL_PORT = 3306
 MYSQL_USERNAME = 'root'
 MYSQL_PASSWORD = '123456'
+
+# 设置项目路径,将当前项目作为资源目录
+# sys.path.insert(0,"F:\PYTHON_WorkSpace\ArticleSpider\ArticleSpider")
+import sys
+sys.path.insert(0,os.path.join(project_dir,"ArticleSpider"))
