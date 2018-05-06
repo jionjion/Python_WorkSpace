@@ -68,7 +68,7 @@ class JsonExporterPipleline(object):
     # 关闭导出
     def close_spider(self, spider):
         # 停止导出方法
-        self.exporter.finish_exporting();
+        self.exporter.finish_exporting()
         self.file.close()
 
 
@@ -144,18 +144,30 @@ class MysqlTwistedPipline(object):
         # 添加异常处理回调
         query.addErrback(self.error_handler, item, spider)
 
-    # 定义错误处理函数
+    # 定义错误处理函数,常作为定位错误的地方
     def error_handler(self, failure, item, spider):
-        print(failure)
+        print('异步入库失败...因为:',failure)
 
-    # 保存方法,被异步调用,参数列表固定
+    # # 保存方法,被异步调用,参数列表固定
+    # def do_insert(self, cursor, item):
+    #     # 根据类名,进行入库SQL
+    #     if item.__class__.__name__ == 'JobboleArticleItem':
+    #         insert_sql = '''
+    #             insert into jobbole_article(object_url_id , title , front_image_url , front_image_path ,
+    #                                           create_date , url , thumb_num , mark_num , content)
+    #             values (%s , %s , %s , %s , %s , %s , %s , %s , %s)
+    #         '''
+    #         cursor.execute(query=insert_sql,
+    #                        args=(item["object_url_id"], item["title"], item["front_image_url"], item["front_image_path"],
+    #                              item["create_date"], item["url"], item["thumb_num"], item["mark_num"], item["content"]))
+    #         # 自动提交,保存
+
+    # 根据不同的item , 执行具体的插入
     def do_insert(self, cursor, item):
-        insert_sql = '''
-            insert into jobbole_article(object_url_id , title , front_image_url , front_image_path , 
-                                          create_date , url , thumb_num , mark_num , content)
-            values (%s , %s , %s , %s , %s , %s , %s , %s , %s)
-        '''
-        cursor.execute(query=insert_sql,
-                       args=(item["object_url_id"], item["title"], item["front_image_url"], item["front_image_path"],
-                             item["create_date"], item["url"], item["thumb_num"], item["mark_num"], item["content"]))
-        # 自动提交,保存
+        # 在item定义中,构建get_insert_sql()方法,传入各种SQL
+        insert_sql, params = item.get_insert_sql()
+
+        print (insert_sql, params)
+        # 执行SQL
+        cursor.execute(insert_sql, params)
+

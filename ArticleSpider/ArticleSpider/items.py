@@ -8,14 +8,21 @@
 import scrapy
 import datetime
 import re
+
 from scrapy.loader.processors import MapCompose
 from scrapy.loader.processors import TakeFirst
+from scrapy.loader.processors import Join
 from scrapy.loader import ItemLoader
+
+from w3lib.html import remove_tags
 
 '''
     使用item类,将需要保存的对象放置到类中,实现orm映射保存
 '''
-
+class ArticlespiderItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    pass
 
 
 # 日期转为字符
@@ -75,48 +82,96 @@ class JobboleArticleItem(scrapy.Item):
     # 内容
     content = scrapy.Field()
 
+    # 入库SQL,作为item的方法的返回
+    def get_insert_sql(self):
+        insert_sql = """
+            insert into jobbole_article(
+                    object_url_id, title, front_image_url, front_image_path,
+                    create_date , url , thumb_num , mark_num , content)
+            values (%s, %s, %s, %s, %s, %s, %s, %s, %s) 
+            on duplicate key 
+            update content=values(content)
+        """
+        # fron_image_url = ""
+        # content = remove_tags(self["content"])
+
+        # if self["front_image_url"]:
+        #     fron_image_url = self["front_image_url"][0]
+        params = (self["object_url_id"], self["title"], self["front_image_url"], self["front_image_path"],
+                  self["create_date"], self["url"], self["thumb_num"], self["mark_num"], self["content"])
+        # 返回SQL和参数列表
+        return insert_sql, params
+
 # 自定义item_loader
 class ArticleItemLoader(ItemLoader):
     # 重写默认的输出函数,不返回迭代器,而直接返回第一个元素
     default_output_processor = TakeFirst()
 
 
-class ArticlespiderItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-
 
 
 '''
     拉勾网爬取用到的类
 '''
-class LagouJob(scrapy.Item):
+
+# 拉勾网自定义的迭代器,返回选择器匹配到的第一个,而不是一个数组
+class LagouItemLoader(ItemLoader):
+    default_output_processor = TakeFirst()
+
+# 删除两侧的/
+def remove_splash(value):
+    return value.replace('/','')
+
+# 专门处理工作地点字段,去除换行和空格
+def handle_jobaddr(value):
+    addr_list = value.split('\n')
+    addr_list = [item.strip() for item in addr_list if item.strip()!='查看地图']
+    return "".join(addr_list)
+
+class LagouJobItem(scrapy.Item):
     # 拉勾网职位信息
     # 职位URL
     url = scrapy.Field()
     # 职位页面ID
-    url_object_id = scrapy.Field()
+    url_id = scrapy.Field()
     # 标题
-    titile = scrapy.Field()
+    title = scrapy.Field()
     # 薪资
     salary = scrapy.Field()
     # 工作地点
-    job_city = scrapy.Field()
+    job_city = scrapy.Field(
+        # 删除两侧/斜线
+        input_processor = MapCompose(remove_splash),
+    )
     # 工作年限
-    work_year = scrapy.Field()
+    work_year = scrapy.Field(
+        input_processor = MapCompose(remove_splash),
+    )
     # 学历要求
-    degree_need = scrapy.Field()
+    degree_need = scrapy.Field(
+        input_processor = MapCompose(remove_splash),
+    )
     # 工作类型
-    job_type = scrapy.Field()
+    job_type = scrapy.Field(
+        input_processor = MapCompose(remove_splash),
+    )
     # 发布时间
-    pulish_time = scrapy.Field()
+    publish_time = scrapy.Field()
     # 标签
-    tag = scrapy.Field()
+    tag = scrapy.Field(
+        # 逗号间隔,标签组合输出
+        output_processor=Join(",")
+    )
     # 职位诱惑
     job_advantage = scrapy.Field()
     # 职位描述
     job_desc = scrapy.Field()
+    # 工作地址
+    job_addr = scrapy.Field(
+        # 去除Html标签
+        input_processor=MapCompose(remove_tags,handle_jobaddr)
+
+    )
     # 公司URL
     company_url = scrapy.Field()
     # 公司名
@@ -124,4 +179,31 @@ class LagouJob(scrapy.Item):
     # 创建时间
     crawl_time = scrapy.Field()
     # 最后更新时间
-    crawl_update_tiem = scrapy.Field()
+    crawl_update_time = scrapy.Field()
+
+    # 编写SQL语句, 方法名约定get_insert_sql,便于在pipelines中通用调用
+    def get_insert_sql(self):
+        insert_sql = """
+            insert into lagou_job (
+                url_id, url,  title,  salary, job_city,
+                work_year,  degree_need,  job_type, publish_time,
+                tag,  job_advantage,  job_addr, job_desc, company_url,
+                company_name)
+            values(
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s,
+                %s, %s, %s, %s, %s,  
+                %s)
+            on duplicate key 
+            update salary = values(salary) , job_desc = values(job_desc)
+        """
+        params = (
+            self["url_id"], self["url"], self["title"], self["salary"], self["job_city"],
+            self["work_year"], self["degree_need"], self["job_type"], self["publish_time"],
+            self["tag"],self["job_advantage"], self["job_addr"], self["job_desc"], self["company_url"],
+            self["company_name"],
+        )
+        return insert_sql, params
+
+
+

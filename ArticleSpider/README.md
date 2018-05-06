@@ -84,5 +84,29 @@ scrapy.cfg              整体配置文件
 
 # 实战
 ## 爬取拉钩
-创建项目
+### 创建项目
     scrapy genspider -t crawl lagou www.lagou.com
+    
+### 编写lagou.py,设计抓取规则,设置请求格式
+
+### 编写items.py,设计数据库对象
+
+### 使用shell,设置请求参数或者配置文件获得请求参数
+
+标题:     response.css('.job-name ::attr(title)').extract()
+薪资:     response.css('span[class=salary] ::text').extract()
+工作地点: response.xpath("//*[@class='job_request']/p/span[2]/text()").extract()
+工作经验: response.xpath("//*[@class='job_request']/p/span[3]/text()").extract()
+学历要求: response.xpath("//*[@class='job_request']/p/span[4]/text()").extract()
+工作性质: response.xpath("//*[@class='job_request']/p/span[5]/text()").extract()
+标签:     response.css(".position-label li::text").extract()
+发布时间: response.css(".publish_time ::text").extract()
+职位诱惑: response.css(".job-advantage p ::text").extract()
+职位描述: response.css(".job_bt div").extract()
+工作地点: response.css(".work_addr").extract()
+公司名称: response.css("#job_company img::attr('alt')").extract()
+公司主页: response.css("#job_company ul a::attr('href')").extract()
+
+进一步提炼获取信息
+
+### 分页页面,获得

@@ -69,13 +69,13 @@ ROBOTSTXT_OBEY = False
 # 设置ORM映射模型的位置, 处理类 和 进入顺序,越小优先级越高,先处理图片,再处理保存
 ITEM_PIPELINES = {
    # 框架生成的
-   'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
+   # 'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
    # 自定义的图片下载
-   'ArticleSpider.pipelines.ArticleImagesPipeline': 200,
+   # 'ArticleSpider.pipelines.ArticleImagesPipeline': 200,
    # 自定义的JSON写入
    # 'ArticleSpider.pipelines.JsonWithEncodingPipeline': 200,
    # 自定义的JSON导出
-   'ArticleSpider.pipelines.JsonExporterPipleline': 200,
+   # 'ArticleSpider.pipelines.JsonExporterPipleline': 200,
    # 自定义的MySQL存入
    # 'ArticleSpider.pipelines.MysqlPipeline': 200,
    # 使用异步连接池存入MySQL
