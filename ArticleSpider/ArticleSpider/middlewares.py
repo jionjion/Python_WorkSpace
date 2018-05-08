@@ -6,6 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from fake_useragent import UserAgent
 
 
 class ArticlespiderSpiderMiddleware(object):
@@ -101,3 +102,36 @@ class ArticlespiderDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+'''
+    各种使用中用到的中间件
+'''
+class RandomUserAgentMiddleWare(object):
+    # 随机更换请求头中的 User-Agent 参数
+
+    def __init__(self, crawler):
+        # 使用父类的方法,进行初始化
+        super(RandomUserAgentMiddleWare, self).__init__()
+        # 方式一:直接在settings配置文件中指定
+        # 方式二: 获得settings中设置的USER_AGENT_LIST
+        # self.user_agent_list = crawler.settings.get('USER_AGENT_LIST', [])
+        # 方式三: 使用开源工具,获得其实例,需要提前下载
+        self.userAgent = UserAgent()
+        # 获得配置中的USER_AGENT_TYPE参数,(区分大小写),默认为random
+        self.user_agent_type = crawler.settings.get('USER_AGENT_TYPE', 'random')
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        # 静态方法,从crawler获得请求内容
+        return cls(crawler)
+
+    def process_request(self, request, spider):
+        # 匿名函数
+        def get_ua():
+            # 闭包特性,getattr(),获得某个对象的某个属性/方法. 相当于执行userAgent.user_agent_type()方法
+            return getattr(self.userAgent, self.user_agent_type)
+
+        # 随机获得一个UserAgent
+        request.headers.setdefault('User_Agent', get_ua())
+        # 设置IP代理.从http://www.xicidaili.com/nn中免费获取
+        request.meta["proxy"] = "http://106.110.34.27:61234"

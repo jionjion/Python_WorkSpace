@@ -109,4 +109,24 @@ scrapy.cfg              整体配置文件
 
 进一步提炼获取信息
 
-### 分页页面,获得
+### 分页页面,设置提取规则
+
+### 设置数据库对象,保存进入数据库
+
+## 反爬虫
+
+### 配置User-Agent
+使用开源工具 fake-useragent 替换请求
+1. 安装 
+    pip install fake-useragent
+    
+2. 使用
+    from fake_useragent import UserAgent
+    ua = UserAgent()
+    # 召唤chrome的User-Agent
+    ua.chrome
+    # 随机切换出现一个
+    ua.random
+3.创建中间件执行的类,并在settings文件中配置执行
+
+### 更换IP
