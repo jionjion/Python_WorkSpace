@@ -56,8 +56,12 @@ ROBOTSTXT_OBEY = False
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 # 请求和响应互联网时经过的中间件,数字越小越先执行,如果要重写,要么其执行顺序在系统的之后(数字填大点),或者将系统的注释或置None
 DOWNLOADER_MIDDLEWARES = {
-   'ArticleSpider.middlewares.RandomUserAgentMiddleWare': 543,
-   'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': None
+   # 更换UserAgent
+   'ArticleSpider.middlewares.RandomUserAgentMiddleware': 1000,
+   # 使用IP代理
+   # 'ArticleSpider.middlewares.RandomProxyMiddleware': 1200,
+   # 系统自带的
+   # 'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': None
 }
 
 # Enable or disable extensions

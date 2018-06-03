@@ -16,14 +16,16 @@ class LagouSpider(CrawlSpider):
 
     # 请求设置,不启用Cookies,避免被拦截
     custom_settings = {
+        # setting中的配置信息
         "COOKIES_ENABLED": False,
-        "DOWNLOAD_DELAY": 1,
+        "DOWNLOAD_DELAY": 3,
+        # 默认请求头
         'DEFAULT_REQUEST_HEADERS': {
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'zh-CN,zh;q=0.8',
             'Connection': 'keep-alive',
-            'Cookie': '_ga=GA1.2.423832464.1525571709; _gid=GA1.2.1964943705.1525571709; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1525507738,1525570198,1525571668; LGSID=20180506095509-81f0f404-50d0-11e8-803d-5254005c3644; LGUID=20180506095509-81f0f6d3-50d0-11e8-803d-5254005c3644; PRE_HOST=; PRE_LAND=https%3A%2F%2Fwww.lagou.com%2Fjobs%2F4420625.html; PRE_SITE=; PRE_UTM=; user_trace_token=20180506095509-63c4c57b-52c0-421e-bfa8-04f9d2bff302; JSESSIONID=ABAAABAAADEAAFIEE869A27A8071F47BE050D4A07B0DD92; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; LGRID=20180506095841-ffe31c38-50d0-11e8-87ee-525400f775ce; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1525571921',
+            'Cookie': 'JSESSIONID=ABAAABAAADEAAFIAA4526F7F66E6F197A5DF98DCAEFD18F; user_trace_token=20180603153942-da029452-65ca-43ca-8567-36a0372f8c31; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1525571668,1525581420,1527230945,1528010717; _ga=GA1.2.384053996.1528011583; _gat=1; _gid=GA1.2.2111812457.1528011583; LGSID=20180603153943-47d0b006-6701-11e8-9071-525400f775ce; PRE_UTM=; PRE_HOST=; PRE_SITE=; PRE_LAND=https%3A%2F%2Fwww.lagou.com%2Fjobs%2F4420625.html; LGUID=20180603153943-47d0b1ce-6701-11e8-9071-525400f775ce; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1528011610; LGRID=20180603154010-57c9375b-6701-11e8-9367-5254005c3644',
             'Host': 'www.lagou.com',
             'Origin': 'https://www.lagou.com',
             'Referer': 'https://www.lagou.com/',

@@ -7,6 +7,7 @@
 
 from scrapy import signals
 from fake_useragent import UserAgent
+from tools.crawl_xici_ip import get_random_ip
 
 
 class ArticlespiderSpiderMiddleware(object):
@@ -106,12 +107,12 @@ class ArticlespiderDownloaderMiddleware(object):
 '''
     各种使用中用到的中间件
 '''
-class RandomUserAgentMiddleWare(object):
+class RandomUserAgentMiddleware(object):
     # 随机更换请求头中的 User-Agent 参数
 
     def __init__(self, crawler):
         # 使用父类的方法,进行初始化
-        super(RandomUserAgentMiddleWare, self).__init__()
+        super(RandomUserAgentMiddleware, self).__init__()
         # 方式一:直接在settings配置文件中指定
         # 方式二: 获得settings中设置的USER_AGENT_LIST
         # self.user_agent_list = crawler.settings.get('USER_AGENT_LIST', [])
@@ -134,4 +135,12 @@ class RandomUserAgentMiddleWare(object):
         # 随机获得一个UserAgent
         request.headers.setdefault('User_Agent', get_ua())
         # 设置IP代理.从http://www.xicidaili.com/nn中免费获取
-        request.meta["proxy"] = "http://106.110.34.27:61234"
+        # request.meta["proxy"] = "http://106.110.34.27:61234"
+
+class RandomProxyMiddleware(object):
+    # 随机更换请求头中的Proxy,进行请求代理,好像代理不稳定 = =!
+    def process_request(self, request, spider):
+        ipDate = get_random_ip()[0]
+        request.meta["proxy"] = "{0}://{1}:{2}".format(ipDate.type, ipDate.ip, ipDate.port)
+        # request.meta["proxy"] = "http://116.213.98.6:8080"
+        print("代理IP","{0}://{1}:{2}".format(ipDate.type.lower(), ipDate.ip, ipDate.port))
