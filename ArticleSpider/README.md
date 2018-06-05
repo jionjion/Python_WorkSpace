@@ -131,3 +131,16 @@ scrapy.cfg              整体配置文件
 
 ### 更换IP
 爬取共有IP代理网站,检测通过后保存到本地服务器
+
+
+## Selenium测试框架
+模拟浏览器请求测试,使用对应语言的API通过driver操控对应浏览器
+
+
+## 环境准备
+1. 安装
+    pip install selenium
+对应API参考 `http://selenium-python.readthedocs.io/installation.html#introduction`
+中文API参考 `http://selenium-python-zh.readthedocs.io/en/latest/installation.html`
+
+2. 下载对应驱动
