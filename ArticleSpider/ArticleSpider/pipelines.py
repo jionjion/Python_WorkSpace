@@ -146,7 +146,7 @@ class MysqlTwistedPipline(object):
 
     # 定义错误处理函数,常作为定位错误的地方
     def error_handler(self, failure, item, spider):
-        print('异步入库失败...因为:',failure)
+        print('异步入库失败...因为:', failure)
 
     # # 保存方法,被异步调用,参数列表固定
     # def do_insert(self, cursor, item):
@@ -167,7 +167,7 @@ class MysqlTwistedPipline(object):
         # 在item定义中,构建get_insert_sql()方法,传入各种SQL
         insert_sql, params = item.get_insert_sql()
 
-        print (insert_sql, params)
+        print(insert_sql, params)
         # 执行SQL
         cursor.execute(insert_sql, params)
 

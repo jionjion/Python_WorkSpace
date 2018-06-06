@@ -10,6 +10,9 @@ from ArticleSpider.items import ArticleItemLoader
 from ArticleSpider.utils.commons import get_md5
 from scrapy.http import Request
 from scrapy.loader import ItemLoader
+from selenium import webdriver
+from scrapy.xlib.pydispatch import dispatcher
+from scrapy import signals
 
 '''
     爬取网站 http://blog.jobbole.com/all-posts/
@@ -19,6 +22,19 @@ class JobboleSpider(scrapy.Spider):
     name = 'jobbole'                            # 爬行项目的名字,用以调用项目
     allowed_domains = ['blog.jobbole.com']      # 开始网址
     start_urls = ['http://blog.jobbole.com/all-posts/']   # 遍历的文件
+
+    # 初始化方法,携带浏览器信息
+    def __init__(self):
+        self.chrome_driver_path = 'E:\PhantomJS\driver\chromedriver.exe'
+        self.browser = webdriver.Chrome(executable_path=self.chrome_driver_path)
+        super(JobboleSpider, self).__init__()
+        # 信号量,配置处理函数,触发信号量
+        dispatcher.connect(receiver=self.spider_closed, signal=signals.spider_closed)
+
+    # 信号量处理函数,当关闭时触发,关闭浏览器
+    def spider_closed(self, spider):
+        print("连接关闭")
+        self.browser.quit()
 
     # 解析列表页面信息
     def parse(self, response):

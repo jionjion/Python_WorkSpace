@@ -60,6 +60,8 @@ DOWNLOADER_MIDDLEWARES = {
    'ArticleSpider.middlewares.RandomUserAgentMiddleware': 1000,
    # 使用IP代理
    # 'ArticleSpider.middlewares.RandomProxyMiddleware': 1200,
+   # 使用selenium模拟浏览器请求
+   'ArticleSpider.middlewares.JSPageMiddleware': 1300,
    # 系统自带的
    # 'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': None
 }
@@ -76,8 +78,8 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    # 框架生成的
    # 'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
-   # 自定义的图片下载
-   # 'ArticleSpider.pipelines.ArticleImagesPipeline': 200,
+   # 自定义的图片下载,下载伯乐在线的图片
+   'ArticleSpider.pipelines.ArticleImagesPipeline': 200,
    # 自定义的JSON写入
    # 'ArticleSpider.pipelines.JsonWithEncodingPipeline': 200,
    # 自定义的JSON导出

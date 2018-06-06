@@ -144,3 +144,24 @@ class RandomProxyMiddleware(object):
         request.meta["proxy"] = "{0}://{1}:{2}".format(ipDate.type, ipDate.ip, ipDate.port)
         # request.meta["proxy"] = "http://116.213.98.6:8080"
         print("代理IP","{0}://{1}:{2}".format(ipDate.type.lower(), ipDate.ip, ipDate.port))
+
+from selenium import webdriver
+from scrapy.http import HtmlResponse
+class JSPageMiddleware(object):
+
+
+
+    # 使用selenium调用Chrome请求页面
+    def process_request(self, request, spider):
+        # 驱动配置位置
+
+
+        # 仅针对伯乐在线的项目进行动态请求
+        if spider.name == "jobbole":
+            spider.browser.get(request.url)
+            # 等待5S
+            spider.browser.implicitly_wait(time_to_wait=5)
+            print("使用Chrome模拟访问{0}".format(request.url))
+
+            # 不再经由download,直接获得Chrome的响应
+            return HtmlResponse(url=spider.browser.current_url, body=spider.browser.page_source, encoding="utf-8", request=request)
