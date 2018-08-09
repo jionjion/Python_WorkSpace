@@ -130,5 +130,3 @@ if __name__ == '__main__':
         # # 开始识别，图片路径，验证码类型ID，超时时间（秒），识别结果
         # cid, result = yundama.decode(filename, codetype, timeout);
         # print('cid: %s, result: %s' % (cid, result))
-
-######################################################################

@@ -146,3 +146,24 @@ scrapy.cfg              整体配置文件
 2. 下载对应驱动
 
 ## 集成
+
+## 无界面运行环境
+1. 安装
+    pip install pyvirtualdisplay
+
+2. 使用
+    # 不显示浏览器
+    from pyvirtualdisplay import Display
+    display = Display(backend=None,visible=0,size=(800,600))
+    display.start()
+    browser = webdriver.Chrome()
+    browser.get(url='https://baidu.com')
+    # 其他    
+
+# scrapy暂停/重启
+  
+1. 启动,在Windos下启动
+scrapy crawl lagou -s JOBDIR=job_info/001
+
+2. 重启,相同命令
+scrapy crawl lagou -s JOBDIR=job_info/001
