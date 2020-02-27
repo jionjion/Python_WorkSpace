@@ -8,6 +8,8 @@
 
 import MySQLdb
 import datetime
+
+
 # 创建类,并集成自父类
 class MysqlInsert(object):
 
@@ -50,7 +52,7 @@ class MysqlInsert(object):
             cursor = self.conn.cursor()
             # 获取当前时间
             now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            cursor.execute(query=sql,args=('就问你怕不怕','昨夜,上海地区温度跌破冰点,上海人表示受不了','新闻','','Jion', 1 , now, 1 ))
+            cursor.execute(query=sql, args=('就问你怕不怕', '昨夜,上海地区温度跌破冰点,上海人表示受不了', '新闻', '', 'Jion', 1, now, 1))
             # 提交事务
             self.conn.commit()
         except:
@@ -72,10 +74,10 @@ class MysqlInsert(object):
             # 获取当前时间
             now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             # 批量数据,使用lsit列表封装元组数据
-            datas = [('五分钟即可','每天抽出五分钟时间,读书看报聊人生','读书','','Jion', 1 , now, 1 )
-                    ,('尴尬时刻,男默女泪','降温了,但是却没有衣服穿','新闻','','Jion', 1 , now, 1 )
-                    ,('大动作,搞事情', '昨夜,读完了一本书', '读书', '', 'Jion', 1, now, 1)]
-            cursor.executemany(query=sql,args=datas)
+            datas = [('五分钟即可', '每天抽出五分钟时间,读书看报聊人生', '读书', '', 'Jion', 1, now, 1)
+                , ('尴尬时刻,男默女泪', '降温了,但是却没有衣服穿', '新闻', '', 'Jion', 1, now, 1)
+                , ('大动作,搞事情', '昨夜,读完了一本书', '读书', '', 'Jion', 1, now, 1)]
+            cursor.executemany(query=sql, args=datas)
             # 提交事务
             self.conn.commit()
         except MySQLdb.Error as e:
@@ -85,6 +87,7 @@ class MysqlInsert(object):
             # 关闭连接
             cursor.close()
             self.conn.close()
+
 
 if __name__ == '__main__':
     obj = MysqlInsert()
